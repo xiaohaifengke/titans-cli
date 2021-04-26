@@ -1,0 +1,28 @@
+{
+  "name": "otitan-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "otitan": "./bin/otitan",
+    "otitan-cli": "./bin/otitan"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@192.168.0.17:2222/liujh/otitan-cli.git"
+  },
+  "keywords": [
+    "otitan",
+    "otitan-cli",
+    "cli"
+  ],
+  "author": "Jhail",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0"
+  }
+}
