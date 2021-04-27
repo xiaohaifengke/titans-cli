@@ -8,7 +8,8 @@
     "otitan-cli": "./bin/otitan"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "otitan": "otitan create aaa"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,11 @@
   "author": "Jhail",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "chalk": "^4.1.1",
-    "commander": "^7.2.0"
+    "commander": "^7.2.0",
+    "fs-extra": "^9.1.0",
+    "inquirer": "^8.0.0",
+    "ora": "^5.4.0"
   }
 }
