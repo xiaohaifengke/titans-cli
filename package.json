@@ -30,6 +30,7 @@
     "download-git-repo": "^3.0.2",
     "ejs": "^3.1.6",
     "fs-extra": "^9.1.0",
+    "ini": "^2.0.0",
     "inquirer": "^8.0.0",
     "metalsmith": "^2.3.0",
     "ncp": "^2.0.0",
