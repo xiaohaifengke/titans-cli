@@ -33,7 +33,7 @@ program
   .description('start and open the otitan-cli ui')
   .option('-p, --port <port>', 'Port used for the UI server (by default search for available port)')
   .action((options) => {
-    console.log(options)
+    console.log('暂未开发, 敬请期待')
   })
 
 program.on('--help', function () {
