@@ -4,9 +4,10 @@ const defaultConfig = {
   repository: 'gitlab',
   namespace: 'frontend-cli',
   repositoryProtocol: 'http',
-  repositoryDomain: '192.168.0.17',
+  repositoryHostname: '192.168.0.17',
   repositoryPort: '80',
-  repositoryApiBaseURL: '/api/v4'
+  repositoryApiBaseURL: '/api/v4',
+  jenkinsHostname: '192.168.0.12'
 }
 
 module.exports = {
