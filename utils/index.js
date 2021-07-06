@@ -26,6 +26,7 @@ async function waitFnloading(fn, message, ...args) {
     spinner.succeed()
     return res
   } catch (e) {
+    console.log(e)
     spinner.fail('fn execute failed, reexecute again in five seconds')
     await sleep(5000)
     return waitFnloading(fn, message, ...args)

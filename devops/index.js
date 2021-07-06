@@ -9,10 +9,15 @@ const axios = require('axios')
 const FormData =require('form-data');
 const config = require('../config/index').get()
 
-async function createCicd() {
-  const config = await configCICDEnv()
-  const contents = await generateMultibranchConfigXML(config)
-  await createMultibranchProjectByJenkinsApi(config, contents)
+let cliOptions, repositoryOptions
+async function createCicd(options, repositoryInfo = {}) {
+  console.log(chalk.cyan('Start configuring the environment for the CI/CD.'))
+  cliOptions = options
+  repositoryOptions= repositoryInfo
+  const taskConfig = await configCICDEnv()
+  console.log(taskConfig)
+  const contents = await generateMultibranchConfigXML(taskConfig)
+  await createMultibranchProjectByJenkinsApi(taskConfig, contents)
 }
 
 async function configCICDEnv() {
@@ -21,8 +26,22 @@ async function configCICDEnv() {
   const result = await inquirer.prompt([
     {
       type: 'input',
+      name: 'taskname',
+      message: "Please enter the task name? ",
+      validate: function (value, result) {
+        if (value) return true
+        return 'taskname is required'
+      },
+      default: repositoryOptions.name
+    },
+    {
+      type: 'input',
       name: 'jenkinsHostname',
-      message: "Please enter the Jenkins IP? ",
+      message: "Please enter the Jenkins server's hostname? ",
+      validate: function (value, result) {
+        if (value) return true
+        return 'jenkinsHostname is required'
+      },
       default: jenkinsHostname
     },
     {
@@ -41,21 +60,21 @@ async function configCICDEnv() {
       validate: function (value, result) {
         if (value) return true
         return 'SSH url is required'
-      }
+      },
+      default: repositoryOptions.ssh_url_to_repo
     },
   ])
   return result
 }
 
-async function generateMultibranchConfigXML(config) {
+async function generateMultibranchConfigXML(taskConfig) {
   const templatePath = path.resolve(__dirname, './config/multibranch-config-template.xml')
   const xmlStr = fs.readFileSync(templatePath, 'utf-8')
-  const contents = await render(xmlStr, config)
-  fs.writeFileSync(path.resolve(__dirname, './temp/multibranch-config-template.xml'), contents)
+  const contents = await render(xmlStr, taskConfig)
   return contents
 }
 
-async function createMultibranchProjectByJenkinsApi(config, contents) {
+async function createMultibranchProjectByJenkinsApi(taskConfig, contents) {
   /**
    * 假设使用 Frontend 这个用户
    * 先在 http://Jenkins_IP:8080/user/Frontend/configure 这个地址中的API Token添加一个token，并复制下来。假设token是 123456abcdefghijklmn789
@@ -72,12 +91,8 @@ async function createMultibranchProjectByJenkinsApi(config, contents) {
     'Content-Type': 'application/xml', // 11780a619795a144d7edc33c2728b8acd3
     'Authorization': 'Basic RnJvbnRlbmQ6MTE3ODBhNjE5Nzk1YTE0NGQ3ZWRjMzNjMjcyOGI4YWNkMw=='
   }
-  try {
-    const res = await axios.post(`http://${config.cicdIP}:8080/createItem?name=testest`, contents, {headers})
-    console.log('创建成功', res)
-  } catch (e) {
-    console.log(e.response.data, 'devops/index.js', e)
-  }
+  const res = await axios.post(`http://${taskConfig.jenkinsHostname}:8080/createItem`, contents, {headers, params: {name: taskConfig.taskname}})
+  console.log('创建成功', res)
 }
 
 

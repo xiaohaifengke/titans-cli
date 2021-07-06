@@ -39,7 +39,6 @@ async function inquirerRepoOptions() {
     return result
   }, {})
   const namespaceChoices = Object.keys(namespaceMap).reduce((ret, key) => {
-    
     ret.push(new inquirer.Separator(chalk.bgCyan.bold(`   ${uppercaseFirstLetter(key) + 's   '}`)))
     ret.push(...namespaceMap[key].map(item => ({...item, value: item.id})))
     return ret
@@ -54,7 +53,7 @@ async function inquirerRepoOptions() {
     {
       name: 'name',
       type: 'input',
-      message: 'Input the project name',
+      message: 'Input the repository name',
       validate: function (value) {
         if (value) {
           if (value.endsWith('.git') || value.endsWith('.atom') || !/^[a-zA-Z0-9_][a-zA-Z0-9_\-\.]*$/.test(value)) {
@@ -69,7 +68,7 @@ async function inquirerRepoOptions() {
     {
       name: 'description',
       type: 'input',
-      message: 'Input the project description'
+      message: 'Input the repository description'
     },
     {
       name: 'visibility',
@@ -100,6 +99,7 @@ async function inquirerRepoOptions() {
 }
 
 async function createGitlabRepo() {
+  console.log(chalk.cyan('Start creating the repository on the gitlab.'))
   const options = await inquirerRepoOptions()
   const createGitlabProjectOptions = {
     namespace_id: options.namespace_id,
@@ -107,12 +107,13 @@ async function createGitlabRepo() {
     description: options.description,
     visibility: options.visibility
   }
-  const res = await waitFnloading(createGitlabProject, 'creating the repository...', options)
+  const res = await waitFnloading(createGitlabProject, 'creating the repository...', createGitlabProjectOptions)
   console.log(chalk.cyan('Repository was created successfully!'))
   console.log(`Repository info:`)
   console.log(`ssh_url_to_repo: ${chalk.green(res.ssh_url_to_repo)}`)
   console.log(`http_url_to_repo: ${chalk.green(res.http_url_to_repo)}`)
   console.log(`web_url: ${chalk.green(res.web_url)}`)
+  console.log('')
   return res
 }
 
