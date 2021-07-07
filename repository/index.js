@@ -24,6 +24,7 @@ async function getNamespaces() {
       pathname: '/profile/personal_access_tokens'
     })
     console.log(chalk.red(`Gitlab APIToken is invalid, please add a APIToken on this page: ${gitlabApiTokenUrl}`))
+    throw e
   }
 }
 

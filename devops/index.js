@@ -1,5 +1,3 @@
-const { stringToBase64 } = require('../utils')
-
 const inquirer = require('inquirer')
 const metalsmith = require('metalsmith')
 const util = require('util')
@@ -9,22 +7,27 @@ const cons = require('consolidate')
 const render = util.promisify(cons.ejs.render)
 const axios = require('axios')
 const chalk = require('chalk')
-const FormData =require('form-data');
+const FormData = require('form-data')
 const config = require('../config/index').get()
+const { stringToBase64 } = require('../utils')
+const { addProjectHook } = require('../lib/request')
 
 let cliOptions, repositoryOptions
+
 async function createCicd(options, repositoryInfo = {}) {
   console.log(chalk.cyan('Start configuring the environment for the CI/CD...'))
   cliOptions = options
-  repositoryOptions= repositoryInfo
+  repositoryOptions = repositoryInfo
   const taskConfig = await configCICDEnv()
   const contents = await generateMultibranchConfigXML(taskConfig)
   await createMultibranchProjectByJenkinsApi(taskConfig, contents)
 }
 
 async function configCICDEnv() {
-  let jenkinsHostname = config.jenkinsHostname
-  
+  let answers = {
+    repoId: repositoryOptions.id,
+    hookToken: cliOptions.name
+  }
   const result = await inquirer.prompt([
     {
       type: 'input',
@@ -44,7 +47,7 @@ async function configCICDEnv() {
         if (value) return true
         return 'jenkinsHostname is required'
       },
-      default: jenkinsHostname
+      default: config.jenkinsHostname
     },
     {
       type: 'input',
@@ -65,7 +68,27 @@ async function configCICDEnv() {
       },
       default: repositoryOptions.ssh_url_to_repo
     },
-  ])
+    {
+      type: 'input',
+      name: 'repoWebhookUrl',
+      message: "Please enter the webhook url that is triggered when code is pushed to the repository?",
+      validate: function (value, result) {
+        if (value) return true
+        return 'webhook url is required'
+      },
+      default: `http://${config.jenkinsHostname}:8080/generic-webhook-trigger/invoke`
+    },
+    {
+      type: 'input',
+      name: 'repoId',
+      message: `Please enter the repository ID or URL-encoded path of the project? (${chalk.yellow('Not required!')}) `
+    },
+    {
+      type: 'input',
+      name: 'hookToken',
+      message: `Please enter the project name? (${chalk.yellow('Not required!')}) `
+    }
+  ], answers)
   return result
 }
 
@@ -84,20 +107,49 @@ async function createMultibranchProjectByJenkinsApi(taskConfig, contents) {
    * 在调用Jenkins Api时在请求头中添加 'Authorization': 'Basic RnJvbnRlbmQ6MTIzNDU2YWJjZGVmZ2hpamtsbW43ODk=' 可以通过权限验证
    * 否则会报如下错误：
    * HTTP ERROR 403 No valid crumb was included in the request
-   * URI:	/configureSecurity/configure
-   * STATUS:	403
-   * MESSAGE:	No valid crumb was included in the request
-   * SERVLET:	Stapler
+   * URI:  /configureSecurity/configure
+   * STATUS:  403
+   * MESSAGE:  No valid crumb was included in the request
+   * SERVLET:  Stapler
    */
   const authorization = stringToBase64(`${config.jenkinsUser}:${config.jenkinsAPIToken}`)
   const headers = {
     'Content-Type': 'application/xml',
     'Authorization': `Basic ${authorization}`
   }
-  const res = await axios.post(`http://${taskConfig.jenkinsHostname}:8080/createItem`, contents, {headers, params: {name: taskConfig.taskname}})
+  const res = await axios.post(`http://${taskConfig.jenkinsHostname}:8080/createItem`, contents, {
+    headers,
+    params: { name: taskConfig.taskname }
+  })
+  
   console.log(chalk.cyan('CI/CD multibranch workflow was created successfully!'))
+  
+  // 为gitlab仓库添加webhook url
+  let addHook = false
+  const webhookTip = `1. 需要为代码仓库配置 Webhook URL和安全令牌，这样在提交代码时才会通过webhook触发jenkins对应的CI/CD任务。
+  可能的配置地址为：Gitlab_IP/[namespace]/[project_name]/settings/integrations；`
+  const webhookConfirmTip = `1. 已经为代码仓库配置 Webhook URL(${taskConfig.repoWebhookUrl})
+  和安全令牌(${taskConfig.hookToken})，请确保此安全令牌和Jenkinsfile中的 triggers.GenericTrigger.token 的值一致，
+  否则可能会出现提交代码后不能自动触发CI/CD任务的情况。`
+  const dingdingRobotTip = `2. 如果要在Jenkins构建任务中集成钉钉通知，需要在Jenkins的系统配置中添加钉钉机器人id，
+  名称及钉钉的webhook等信息，并在jenkinsfile中配置钉钉id。`
+  if (taskConfig.hookToken && taskConfig.repoId) {
+    try {
+      await addProjectHook({
+        repoId: taskConfig.repoId,
+        hookUrl: taskConfig.repoWebhookUrl,
+        hookToken: taskConfig.hookToken
+      })
+      addHook = true
+    } catch (e) {
+      //
+    }
+  }
+  console.log(chalk.yellow(`Tips:
+  ${addHook ? webhookConfirmTip : webhookTip}
+  ${dingdingRobotTip}
+  `))
 }
-
 
 
 module.exports = {
