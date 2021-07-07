@@ -1,6 +1,6 @@
 const { uppercaseFirstLetter, waitFnloading } = require('../utils')
 
-const { fetchNamespaces, createGitlabProject } = require('../lib/request')
+const { fetchNamespaces, createGitlabProject, searchProjectsByName } = require('../lib/request')
 const config = require('../config/index').get()
 const chalk = require('chalk')
 const url = require('url')
@@ -98,9 +98,22 @@ async function inquirerRepoOptions() {
   return result
 }
 
+async function queryRepoIsExist(options) {
+  const projects = await searchProjectsByName(options.name)
+  const sameProject = projects.find(p => p.name === options.name && p.namespace.id === options.namespace_id)
+  if (sameProject) {
+    console.log(chalk.redBright(`A project with the same name under the same namespace(${options.namespace}) already exists.`))
+    return true
+  } else {
+    return false
+  }
+}
+
 async function createGitlabRepo() {
-  console.log(chalk.cyan('Start creating the repository on the gitlab.'))
+  console.log(chalk.cyan('Start creating the repository on the gitlab...'))
   const options = await inquirerRepoOptions()
+  const isExistRepo = await queryRepoIsExist(options)
+  if (isExistRepo) return
   const createGitlabProjectOptions = {
     namespace_id: options.namespace_id,
     name: options.name,

@@ -37,8 +37,19 @@ function uppercaseFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.substring(1)
 }
 
+
+function stringToBase64(str){
+  return Buffer.from(str).toString('base64')
+}
+
+function base64ToString(base64Str){
+  return Buffer.from(base64Str,'base64').toString()
+}
+
 module.exports = {
   sleep,
   waitFnloading,
-  uppercaseFirstLetter
+  uppercaseFirstLetter,
+  stringToBase64,
+  base64ToString
 }

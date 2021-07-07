@@ -1,3 +1,5 @@
+const { stringToBase64 } = require('../utils')
+
 const inquirer = require('inquirer')
 const metalsmith = require('metalsmith')
 const util = require('util')
@@ -6,16 +8,16 @@ const path = require('path')
 const cons = require('consolidate')
 const render = util.promisify(cons.ejs.render)
 const axios = require('axios')
+const chalk = require('chalk')
 const FormData =require('form-data');
 const config = require('../config/index').get()
 
 let cliOptions, repositoryOptions
 async function createCicd(options, repositoryInfo = {}) {
-  console.log(chalk.cyan('Start configuring the environment for the CI/CD.'))
+  console.log(chalk.cyan('Start configuring the environment for the CI/CD...'))
   cliOptions = options
   repositoryOptions= repositoryInfo
   const taskConfig = await configCICDEnv()
-  console.log(taskConfig)
   const contents = await generateMultibranchConfigXML(taskConfig)
   await createMultibranchProjectByJenkinsApi(taskConfig, contents)
 }
@@ -87,12 +89,13 @@ async function createMultibranchProjectByJenkinsApi(taskConfig, contents) {
    * MESSAGE:	No valid crumb was included in the request
    * SERVLET:	Stapler
    */
+  const authorization = stringToBase64(`${config.jenkinsUser}:${config.jenkinsAPIToken}`)
   const headers = {
-    'Content-Type': 'application/xml', // 11780a619795a144d7edc33c2728b8acd3
-    'Authorization': 'Basic RnJvbnRlbmQ6MTE3ODBhNjE5Nzk1YTE0NGQ3ZWRjMzNjMjcyOGI4YWNkMw=='
+    'Content-Type': 'application/xml',
+    'Authorization': `Basic ${authorization}`
   }
   const res = await axios.post(`http://${taskConfig.jenkinsHostname}:8080/createItem`, contents, {headers, params: {name: taskConfig.taskname}})
-  console.log('创建成功', res)
+  console.log(chalk.cyan('CI/CD multibranch workflow was created successfully!'))
 }
 
 
