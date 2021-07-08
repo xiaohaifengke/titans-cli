@@ -22,13 +22,14 @@
   ],
   "author": "Jhail",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
     "commander": "^7.2.0",
     "consolidate": "^0.16.0",
     "download-git-repo": "^3.0.2",
     "ejs": "^3.1.6",
+    "execa": "^5.1.1",
     "form-data": "^4.0.0",
     "fs-extra": "^9.1.0",
     "ini": "^2.0.0",

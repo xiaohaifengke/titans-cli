@@ -13,6 +13,7 @@ program
   .description('create a new project')
   .option('-f, --force', 'overwrite target directory if it exists', false)
   .action((appName, options, command) => {
+    console.log(chalk.blueBright(`Otitan CLI v${require('../package.json').version}`))
     require('../lib/create')(appName, options)
   })
 
