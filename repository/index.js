@@ -5,6 +5,8 @@ const config = require('../config/index').get()
 const chalk = require('chalk')
 const url = require('url')
 const inquirer = require('inquirer')
+const execa = require('execa')
+const ora = require('ora')
 
 let cliOptions, repositoryOptions
 async function createRepo(options) {
@@ -110,6 +112,20 @@ async function queryRepoIsExist(options) {
   }
 }
 
+async function pushCodeToRemote(repoInfo) {
+  const spinner = ora({
+    text: 'Push code to the remote repository...'
+  }).start()
+  try {
+    await execa('git remote add origin', [repoInfo.ssh_url_to_repo], { cwd: cliOptions.target })
+    await execa('git push origin master', { cwd: cliOptions.target })
+    spinner.succeed()
+  } catch (e) {
+    spinner.fail()
+    console.log('pushCodeToRemote: ', e)
+  }
+}
+
 async function createGitlabRepo() {
   console.log(chalk.cyan('Start creating the repository on the gitlab...'))
   const options = await inquirerRepoOptions()
@@ -121,14 +137,15 @@ async function createGitlabRepo() {
     description: options.description,
     visibility: options.visibility
   }
-  const res = await waitFnloading(createGitlabProject, 'creating the repository...', createGitlabProjectOptions)
+  const repoInfo = await waitFnloading(createGitlabProject, 'creating the repository...', createGitlabProjectOptions)
   console.log(chalk.cyan('Repository was created successfully!'))
   console.log(`Repository info:`)
-  console.log(`ssh_url_to_repo: ${chalk.green(res.ssh_url_to_repo)}`)
-  console.log(`http_url_to_repo: ${chalk.green(res.http_url_to_repo)}`)
-  console.log(`web_url: ${chalk.green(res.web_url)}`)
+  console.log(`ssh_url_to_repo: ${chalk.green(repoInfo.ssh_url_to_repo)}`)
+  console.log(`http_url_to_repo: ${chalk.green(repoInfo.http_url_to_repo)}`)
+  console.log(`web_url: ${chalk.green(repoInfo.web_url)}`)
   console.log('')
-  return res
+  await pushCodeToRemote(repoInfo)
+  return repoInfo
 }
 
 module.exports = {
