@@ -23,10 +23,10 @@ program
   .option('-g, --get <path>', 'get value from option')
   .option('-s, --set <path> <value>', 'set option value')
   .option('-d, --delete <path>', 'delete option from config')
-  .option('-e, --edit', 'open config with default editor')
+  // .option('-e, --edit', 'open config with default editor')
   .option('--json', 'outputs JSON result only')
   .action((value, options, command) => {
-    console.log(value, options)
+    require('../config/action')(value, options)
   })
 
 program
@@ -34,7 +34,7 @@ program
   .description('start and open the otitan-cli ui')
   .option('-p, --port <port>', 'Port used for the UI server (by default search for available port)')
   .action((options) => {
-    console.log('暂未开发, 敬请期待')
+    console.log('暂未开发, 敬请期待...')
   })
 
 program.on('--help', function () {

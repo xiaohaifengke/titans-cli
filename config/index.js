@@ -1,16 +1,17 @@
 const fs = require('fs')
 const ini = require('ini')
 
-const { configFile, defaultConfig } = require('./config')
+const { configFilePath, defaultConfig } = require('./config')
 let configFileContent = {}
-if (fs.existsSync(configFile)) {
-  configFileContent = ini.parse(fs.readFileSync(configFile, 'utf-8'))
+if (fs.existsSync(configFilePath)) {
+  configFileContent = ini.parse(fs.readFileSync(configFilePath, 'utf-8'))
 }
 const config = { ...defaultConfig, ...configFileContent }
 
 module.exports = {
   get,
-  set
+  set,
+  remove
 }
 
 function get(key) {
@@ -23,6 +24,12 @@ function get(key) {
 function set(key, value) {
   config[key] = value
   configFileContent[key] = value
-  fs.writeFileSync(configFile, ini.stringify(configFileContent))
+  fs.writeFileSync(configFilePath, ini.stringify(configFileContent))
+}
+
+function remove(key) {
+  delete config[key]
+  delete configFileContent[key]
+  fs.writeFileSync(configFilePath, ini.stringify(configFileContent))
 }
 
