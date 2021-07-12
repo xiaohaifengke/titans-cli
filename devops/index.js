@@ -11,6 +11,7 @@ const FormData = require('form-data')
 const config = require('../config/index').get()
 const { stringToBase64 } = require('../utils')
 const { addProjectHook } = require('../lib/request')
+const execa = require('execa')
 
 let cliOptions, repositoryOptions
 
@@ -124,6 +125,8 @@ async function createMultibranchProjectByJenkinsApi(taskConfig, contents) {
   
   console.log(chalk.cyan('CI/CD multibranch workflow was created successfully!'))
   
+  await uploadInitialNginxConf(taskConfig)
+  
   // 为gitlab仓库添加webhook url
   let addHook = false
   const webhookTip = `1. 需要为代码仓库配置 Webhook URL和安全令牌，这样在提交代码时才会通过webhook触发jenkins对应的CI/CD任务。
@@ -149,6 +152,16 @@ async function createMultibranchProjectByJenkinsApi(taskConfig, contents) {
   ${addHook ? webhookConfirmTip : webhookTip}
   ${dingdingRobotTip}
   `))
+}
+
+async function uploadInitialNginxConf(taskConfig) {
+  try {
+    await execa.command(`ssh ${config.projectHostUsername}@${config.projectHostname} mkdir -vp /home/docker/${taskConfig.taskname}/nginx/conf`)
+    await execa.command(`scp -o StrictHostKeyChecking=no ./config/default.conf root@192.168.0.18:/home/docker/${taskConfig.taskname}/nginx/conf`, {cwd: __dirname})
+  } catch (e) {
+    console.log(e)
+    console.log('nginx初始配置上传失败，此错误不影响CI/CD任务，稍后请手动配置nginx即可...')
+  }
 }
 
 
