@@ -22,7 +22,7 @@
   ],
   "author": "Jhail",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
     "commander": "^7.2.0",
