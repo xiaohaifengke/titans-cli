@@ -19,7 +19,7 @@ yarn global add otitan-cli
 ## 必要的配置
 
 因为流程中涉及到在Gitlab中创建仓库，和在Jenkins中创建任务，这些操作都需要权限认证。
-在使用本工具之前，你必须提前设置一些参数以便于在整个流程中有权限进行任何操作。
+**在使用本工具之前，你必须提前设置一些参数以便于在整个流程中有权限进行任何操作。**
 工具中已经针对公司的现实环境预设了一些参数的默认值，除非Gitlab和Jenkins环境变了，否则这些参数应该不需要修改。
 已经预设的参数和值如下所示：
 ```ini
@@ -31,7 +31,7 @@ repositoryApiBaseURL=/api/v4
 jenkinsHostname=192.168.0.12
 projectHostUsername=root
 ```
-需要设置的参数如下：
+**需要设置的参数如下：**
 ```ini
 namespace=xxxxxx
 gitlabAPIToken=xxxxxx
