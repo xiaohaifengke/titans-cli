@@ -7,7 +7,8 @@ const defaultConfig = {
   repositoryHostname: '192.168.0.17',
   repositoryPort: '80',
   repositoryApiBaseURL: '/api/v4',
-  jenkinsHostname: '192.168.0.12'
+  jenkinsHostname: '192.168.0.12',
+  projectHostUsername: 'root'
 }
 
 module.exports = {

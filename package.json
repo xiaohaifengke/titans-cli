@@ -8,8 +8,8 @@
     "otitan-cli": "./bin/otitan"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "otitan": "otitan create yunnantianranbaohulin"
+    "docs:dev": "vuepress dev docs --temp .temp",
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "inquirer": "^8.0.0",
     "metalsmith": "^2.3.0",
     "ncp": "^2.0.0",
-    "ora": "^5.4.0"
+    "ora": "^5.4.0",
+    "vuepress": "^1.8.2"
   }
 }
