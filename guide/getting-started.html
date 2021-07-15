@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>快速上手 | Otitan CLI</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="🛠️ 公司项目模板、代码仓库、devOps环境的配置工具">
+    
+    <link rel="preload" href="/titans-cli/assets/css/0.styles.2076f07e.css" as="style"><link rel="preload" href="/titans-cli/assets/js/app.63e0f68d.js" as="script"><link rel="preload" href="/titans-cli/assets/js/2.c2f3fd6e.js" as="script"><link rel="preload" href="/titans-cli/assets/js/11.ee20261a.js" as="script"><link rel="prefetch" href="/titans-cli/assets/js/10.ec4c5bd2.js"><link rel="prefetch" href="/titans-cli/assets/js/3.c578fe8e.js"><link rel="prefetch" href="/titans-cli/assets/js/4.dd6235a8.js"><link rel="prefetch" href="/titans-cli/assets/js/5.fae3d060.js"><link rel="prefetch" href="/titans-cli/assets/js/6.79db3a26.js"><link rel="prefetch" href="/titans-cli/assets/js/7.6ee99692.js"><link rel="prefetch" href="/titans-cli/assets/js/8.b4868047.js"><link rel="prefetch" href="/titans-cli/assets/js/9.6817a17f.js">
+    <link rel="stylesheet" href="/titans-cli/assets/css/0.styles.2076f07e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/titans-cli/" class="home-link router-link-active"><!----> <span class="site-name">Otitan CLI</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/titans-cli/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/titans-cli/guide/" class="nav-link router-link-active">
+  指南
+</a></div><div class="nav-item"><a href="/titans-cli/config/" class="nav-link">
+  配置
+</a></div> <a href="https://github.com/xiaohaifengke/titans-cli" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/titans-cli/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/titans-cli/guide/" class="nav-link router-link-active">
+  指南
+</a></div><div class="nav-item"><a href="/titans-cli/config/" class="nav-link">
+  配置
+</a></div> <a href="https://github.com/xiaohaifengke/titans-cli" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/titans-cli/guide/" aria-current="page" class="sidebar-link">介绍</a></li><li><a href="/titans-cli/guide/getting-started.html" aria-current="page" class="active sidebar-link">快速上手</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="快速上手"><a href="#快速上手" class="header-anchor">#</a> 快速上手</h1> <h2 id="安装"><a href="#安装" class="header-anchor">#</a> 安装</h2> <div class="custom-block tip"><p class="custom-block-title">Node 版本要求</p> <p>建议 Node.js v10 以上。你可以使用 n，nvm 或 nvm-windows 在同一台电脑中管理多个 Node 版本。</p></div> <p>可以使用下列任一命令安装这个新的包：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">npm</span> <span class="token function">install</span> -g otitan-cli
+<span class="token comment"># OR</span>
+<span class="token function">yarn</span> global <span class="token function">add</span> otitan-cli
+</code></pre></div><p>安装之后，你就可以在命令行中访问 <code>otitan</code> 命令。你可以通过简单运行 <code>otitan</code>，看看是否展示出了一份所有可用命令的帮助信息，来验证它是否安装成功。</p> <h2 id="必要的配置"><a href="#必要的配置" class="header-anchor">#</a> 必要的配置</h2> <p>因为流程中涉及到在Gitlab中创建仓库，和在Jenkins中创建任务，这些操作都需要权限认证。
+<strong>在使用本工具之前，你必须提前设置一些参数以便于在整个流程中有权限进行任何操作。</strong>
+工具中已经针对公司的现实环境预设了一些参数的默认值，除非Gitlab和Jenkins环境变了，否则这些参数应该不需要修改。
+已经预设的参数和值如下所示：</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token key attr-name">repository</span><span class="token punctuation">=</span><span class="token value attr-value">gitlab</span>
+<span class="token key attr-name">repositoryProtocol</span><span class="token punctuation">=</span><span class="token value attr-value">http</span>
+<span class="token key attr-name">repositoryHostname</span><span class="token punctuation">=</span><span class="token value attr-value">192.168.0.17</span>
+<span class="token key attr-name">repositoryPort</span><span class="token punctuation">=</span><span class="token value attr-value">80</span>
+<span class="token key attr-name">repositoryApiBaseURL</span><span class="token punctuation">=</span><span class="token value attr-value">/api/v4</span>
+<span class="token key attr-name">jenkinsHostname</span><span class="token punctuation">=</span><span class="token value attr-value">192.168.0.12</span>
+<span class="token key attr-name">projectHostUsername</span><span class="token punctuation">=</span><span class="token value attr-value">root</span>
+</code></pre></div><p><strong>需要设置的参数如下：</strong></p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token key attr-name">namespace</span><span class="token punctuation">=</span><span class="token value attr-value">xxxxxx</span>
+<span class="token key attr-name">gitlabAPIToken</span><span class="token punctuation">=</span><span class="token value attr-value">xxxxxx</span>
+<span class="token key attr-name">jenkinsUser</span><span class="token punctuation">=</span><span class="token value attr-value">xxxxxx</span>
+<span class="token key attr-name">jenkinsAPIToken</span><span class="token punctuation">=</span><span class="token value attr-value">xxxxxx</span>
+<span class="token key attr-name">projectHostname</span><span class="token punctuation">=</span><span class="token value attr-value">192.168.0.18</span>
+</code></pre></div><p>你可以在<a href="/titans-cli/config/">这里</a>查阅每个参数的相关信息及获取方式，设置完这些参数后就可以享用<code>otitan create</code>命令提供的所有功能了。</p> <div class="custom-block tip"><p class="custom-block-title">~/.otitanrc</p> <p>所有通过 <code>otitan config --set</code> 设置的参数均会以<code>ini</code>格式存储在用户的 home 目录下一个名为 <code>.otitanrc</code> 的文件里。
+你可以通过 <code>otitan config</code> 命令修改这些参数，也可以直接编辑 <code>~/.otitanrc</code> 这个文件来修改这些参数。</p></div> <h2 id="使用"><a href="#使用" class="header-anchor">#</a> 使用</h2> <h3 id="otitan-create"><a href="#otitan-create" class="header-anchor">#</a> otitan create</h3> <div class="custom-block warning"><p class="custom-block-title">警告</p> <p>在使用本工具之前，你必须提前设置所有无默认值的参数。</p></div> <p>运行以下命令来创建一个新项目：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>otitan create demo-project
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">提醒</p> <ul><li>otitan-cli有创建Jenkins任务的功能，任务的制品目前只支持部署在 <code>Linux</code> 服务器中，otitan-cli目前还不支持部署制品到 <code>Windows Server</code> 服务器。</li> <li>推荐使用的命令行工具<a href="https://cmder.net/" target="_blank" rel="noopener noreferrer">Cmder<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，比 <code>cmd</code> 和 <code>git bash</code> 好用很多哦。退而求其次的话，<code>IntelliJ IDEA</code>和<code>Vscode</code>自带的终端工具也还行。</li></ul></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/titans-cli/guide/" class="prev router-link-active">
+        介绍
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/titans-cli/assets/js/app.63e0f68d.js" defer></script><script src="/titans-cli/assets/js/2.c2f3fd6e.js" defer></script><script src="/titans-cli/assets/js/11.ee20261a.js" defer></script>
+  </body>
+</html>
