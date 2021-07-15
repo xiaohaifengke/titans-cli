@@ -48,7 +48,7 @@ sidebarDepth: 2
     
     ::: tip 提醒
     因为Jenkins和CLI所在的机器上都需要远程连接到服务器，所以都要提前配置好机器使其可以用 `SSH` 命令连接服务器。  
-    使用密钥认证机制远程登录linux的配置方式，可以参考[这里](/config/config_ssh_to_server)
+    使用密钥认证机制远程登录linux的配置方式，可以参考[这里](./config_ssh_to_server) 。
     :::
 
 

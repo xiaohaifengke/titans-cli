@@ -40,7 +40,6 @@ jenkinsAPIToken=xxxxxx
 projectHostname=192.168.0.18
 ```
 你可以在[这里](/config/)查阅每个参数的相关信息及获取方式，设置完这些参数后就可以享用`otitan create`命令提供的所有功能了。
-> 其实不设置任何参数也是可以创建一个项目的，只不过不能创建远程仓库及Jenkins任务。
 
 ::: tip ~/.otitanrc
 所有通过 `otitan config --set` 设置的参数均会以`ini`格式存储在用户的 home 目录下一个名为 `.otitanrc` 的文件里。
@@ -51,12 +50,17 @@ projectHostname=192.168.0.18
 
 ### otitan create
 
+::: warning 警告
+在使用本工具之前，你必须提前设置所有无默认值的参数。
+:::
+
 运行以下命令来创建一个新项目：
 ```sh
 otitan create demo-project
 ```
 
 ::: tip 提醒
-otitan-cli有创建Jenkins任务的功能，任务的制品目前只支持部署在 `Linux` 服务器中，otitan-cli目前还不支持部署制品到 `Windows Server` 服务器。
+- otitan-cli有创建Jenkins任务的功能，任务的制品目前只支持部署在 `Linux` 服务器中，otitan-cli目前还不支持部署制品到 `Windows Server` 服务器。
+- 推荐使用的命令行工具[Cmder](https://cmder.net/)，比 `cmd` 和 `git bash` 好用很多哦。退而求其次的话，`IntelliJ IDEA`和`Vscode`自带的终端工具也还行。
 :::
 

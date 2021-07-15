@@ -9,4 +9,4 @@ Otitan CLI是一个基于现有的项目模板快速完成新项目启动时所�
 - 自动创建Jenkins多分支流水线任务，并上传初始项目的Nginx配置至服务器所需要的位置，使测试环境的服务可以直接访问。
 
 ## 该工具的运行流程图
-![flow](./imgs/cli-flow.png)
+![flow](./imgs/cli-flow2.png)
