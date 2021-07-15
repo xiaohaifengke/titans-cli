@@ -1,4 +1,14 @@
-## TODOS
+## Usage
+```sh
+npm install -g otitan-cli
+otitan create demo-project
+```
+
+## Documentation
+
+Visit [documentation](https://xiaohaifengke.github.io/titans-cli/)
+
+## Todos
 - 本地缓存功能
 - 添加移动端模板（vue2, vue3）
 - 自定义启动端口
