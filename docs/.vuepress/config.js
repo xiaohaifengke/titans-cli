@@ -1,7 +1,7 @@
 module.exports = {
   title: 'Otitan CLI',
   description: '🛠️ 公司项目模板、代码仓库、devOps环境的配置工具',
-  base: '/otitan-cli/',
+  base: '/titans-cli/',
   themeConfig: {
     displayAllHeaders: true,
     sidebarDepth: 2,

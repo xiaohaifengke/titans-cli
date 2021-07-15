@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用密钥认证机制远程登录Linux | Otitan CLI</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="🛠️ 公司项目模板、代码仓库、devOps环境的配置工具">
+    
+    <link rel="preload" href="/titans-cli/assets/css/0.styles.2076f07e.css" as="style"><link rel="preload" href="/titans-cli/assets/js/app.43568fe8.js" as="script"><link rel="preload" href="/titans-cli/assets/js/2.c2f3fd6e.js" as="script"><link rel="preload" href="/titans-cli/assets/js/10.ec4c5bd2.js" as="script"><link rel="prefetch" href="/titans-cli/assets/js/11.7c909f57.js"><link rel="prefetch" href="/titans-cli/assets/js/3.c578fe8e.js"><link rel="prefetch" href="/titans-cli/assets/js/4.dd6235a8.js"><link rel="prefetch" href="/titans-cli/assets/js/5.fae3d060.js"><link rel="prefetch" href="/titans-cli/assets/js/6.11f037b7.js"><link rel="prefetch" href="/titans-cli/assets/js/7.6ee99692.js"><link rel="prefetch" href="/titans-cli/assets/js/8.b4868047.js"><link rel="prefetch" href="/titans-cli/assets/js/9.41c23a31.js">
+    <link rel="stylesheet" href="/titans-cli/assets/css/0.styles.2076f07e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/titans-cli/" class="home-link router-link-active"><!----> <span class="site-name">Otitan CLI</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/titans-cli/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/titans-cli/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/titans-cli/config/" class="nav-link router-link-active">
+  配置
+</a></div> <a href="https://github.com/xiaohaifengke/titans-cli" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/titans-cli/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/titans-cli/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/titans-cli/config/" class="nav-link router-link-active">
+  配置
+</a></div> <a href="https://github.com/xiaohaifengke/titans-cli" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/titans-cli/config/" aria-current="page" class="sidebar-link">配置项</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/titans-cli/config/#全局cli配置" class="sidebar-link">全局CLI配置</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#无默认值的参数" class="sidebar-link">无默认值的参数</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/titans-cli/config/#namespace" class="sidebar-link">namespace</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#gitlabapitoken" class="sidebar-link">gitlabAPIToken</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#jenkinsuser" class="sidebar-link">jenkinsUser</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#jenkinsapitoken" class="sidebar-link">jenkinsAPIToken</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#projecthostname" class="sidebar-link">projectHostname</a></li></ul></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#有默认值的参数" class="sidebar-link">有默认值的参数</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/titans-cli/config/#repository" class="sidebar-link">repository</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#repositoryprotocol" class="sidebar-link">repositoryProtocol</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#repositoryhostname" class="sidebar-link">repositoryHostname</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#repositoryport" class="sidebar-link">repositoryPort</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#repositoryapibaseurl" class="sidebar-link">repositoryApiBaseURL</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#jenkinshostname" class="sidebar-link">jenkinsHostname</a></li><li class="sidebar-sub-header"><a href="/titans-cli/config/#projecthostusername" class="sidebar-link">projectHostUsername</a></li></ul></li></ul></li><li><a href="/titans-cli/config/config_ssh_to_server.html" aria-current="page" class="active sidebar-link">使用密钥认证机制远程登录Linux</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="使用密钥认证机制远程登录linux"><a href="#使用密钥认证机制远程登录linux" class="header-anchor">#</a> 使用密钥认证机制远程登录Linux</h1> <p>在把nginx配置文件上传到服务器的时候需要使用公钥登录远程服务器，需要配置环境，操作步骤如下：</p> <ol><li><p>在本机生成密钥对<br>
+使用ssh-keygen命令生成密钥对：</p> <div class="language-shell script extra-class"><pre class="language-shell"><code>ssh-keygen -t rsa   <span class="token comment">#-t表示类型选项，这里采用rsa加密算法</span>
+</code></pre></div><p>然后根据提示一步步的按enter键即可（其中有一个提示是要求设置私钥口令passphrase，不设置则为空，这里看心情吧，如果不放心私钥的安全可以设置一下），
+执行结束以后执行<code>cat ~/.ssh/id_rsa.pub</code>获取到公钥。</p></li> <li><p>将公钥复制到远程主机中<br>
+使用ssh-copy-id命令将公钥复制到远程主机。ssh-copy-id会将公钥写到远程主机的 ~/.ssh/authorized_keys 文件中</p> <div class="language- extra-class"><pre class="language-text"><code>ssh-copy-id root@192.168.0.18
+</code></pre></div><p>或者手动把公钥写入到服务器的 ~/.ssh/authorized_keys 文件中</p></li></ol> <p>经过以上两个步骤，以后再登录这个远程主机就不用再输入密码了。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/titans-cli/config/" class="prev router-link-active">
+        配置项
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/titans-cli/assets/js/app.43568fe8.js" defer></script><script src="/titans-cli/assets/js/2.c2f3fd6e.js" defer></script><script src="/titans-cli/assets/js/10.ec4c5bd2.js" defer></script>
+  </body>
+</html>
